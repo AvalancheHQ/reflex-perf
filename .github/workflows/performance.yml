@@ -21,7 +21,7 @@ env:
 jobs:
   benchmarks:
     name: Run benchmarks
-    runs-on: ubuntu-latest
+    runs-on: codspeed-macro-staging
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +38,9 @@ jobs:
 
       - name: Run benchmarks
         uses: CodSpeedHQ/action@v3
+        env:
+          CODSPEED_LOG: debug
+          CODSPEED_USE_PERF: 1
         with:
           token: ${{ secrets.CODSPEED_TOKEN }}
           run: uv run pytest tests/benchmarks --codspeed
