@@ -21,7 +21,12 @@ env:
 jobs:
   benchmarks:
     name: Run benchmarks
-    runs-on: codspeed-macro-staging
+    runs-on: ubuntu-latest
+    # runs-on: codspeed-macro-staging
+    env:
+      CODSPEED_LOG: debug
+      CODSPEED_USE_PERF: 1
+      CODSPEED_RUNNER_MODE: "walltime"
     steps:
       - uses: actions/checkout@v4
 
