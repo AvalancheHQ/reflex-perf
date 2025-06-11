@@ -49,6 +49,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install libsass-dev
 
+      - name: Check fp support
+        run: |
+          uv run python -m sysconfig | grep 'no-omit-frame-pointer'
+
       - name: Run benchmarks
         uses: CodSpeedHQ/action@v3
         env:
