@@ -1,4 +1,4 @@
-name: performance-tests-macro
+name: performance-tests-github
 permissions:
   contents: read
 
@@ -21,8 +21,7 @@ env:
 jobs:
   benchmarks:
     name: Run benchmarks
-    # runs-on: ubuntu-latest
-    runs-on: codspeed-macro
+    runs-on: ubuntu-latest
     env:
       CODSPEED_LOG: debug
       # CODSPEED_USE_PERF: 1
