@@ -1,0 +1,18 @@
+name: Print CPU Info
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-cpu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print /proc/cpuinfo
+        run: |
+          echo "== CPU Model =="
+          grep 'model name' /proc/cpuinfo | head -1
+
+      - name: Print lscpu
+        run: |
+          echo "== lscpu Output =="
+          lscpu
