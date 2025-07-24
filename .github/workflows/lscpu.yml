@@ -5,7 +5,7 @@ on:
 
 jobs:
   check-cpu:
-    runs-on: ubuntu-latest
+    runs-on: codspeed-macro
     steps:
       - name: Print /proc/cpuinfo
         run: |
