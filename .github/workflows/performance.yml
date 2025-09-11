@@ -22,7 +22,7 @@ jobs:
   benchmarks:
     name: Run benchmarks
     # runs-on: ubuntu-latest
-    runs-on: codspeed-macro
+    runs-on: codspeed-macro-staging
     env:
       CODSPEED_LOG: debug
       # CODSPEED_USE_PERF: 1
@@ -33,7 +33,7 @@ jobs:
       # Using this action is still necessary for CodSpeed to work
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
@@ -50,12 +50,29 @@ jobs:
       #   run: |
       #     uv run python -m sysconfig | grep 'no-omit-frame-pointer' || true
 
+      - name: Install Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: nightly
+
+      - name: Install runner from git
+        run: cargo install --git https://github.com/CodSpeedHQ/runner.git --branch cod-992-perf-works-in-github-action-but-not-locally
+
       - name: Run benchmarks
-        uses: CodSpeedHQ/action@v3
+        run: codspeed run --api-url https://gql.staging.preview.codspeed.io/ --upload-url https://api.staging.preview.codspeed.io/upload -- uv run pytest tests/benchmarks --codspeed
         env:
           CODSPEED_LOG: debug
-          # CODSPEED_USE_PERF: 1
-        with:
-          token: ${{ secrets.CODSPEED_TOKEN }}
-          run: uv run pytest tests/benchmarks --codspeed --codspeed-max-time 10
-          runner-version: latest
+          CODSPEED_RUNNER_MODE: "walltime"
+          CODSPEED_PERF_ENABLED: true
+          CODSPEED_TOKEN: ${{ secrets.CODSPEED_TOKEN }}
+
+      # - name: Run benchmarks
+      #   uses: CodSpeedHQ/action@v4
+      #   env:
+      #     CODSPEED_LOG: debug
+      #     CODSPEED_PERF_ENABLED: true
+      #   with:
+      #     token: ${{ secrets.CODSPEED_TOKEN }}
+      #     mode: walltime
+      #     run: uv run pytest tests/benchmarks --codspeed
+      #     upload-url: https://api.staging.preview.codspeed.io/upload
