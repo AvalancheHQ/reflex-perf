@@ -50,10 +50,9 @@ jobs:
       #   run: |
       #     uv run python -m sysconfig | grep 'no-omit-frame-pointer' || true
 
-      - name: Install Rust toolchain
-        uses: actions-rust-lang/setup-rust-toolchain@v1
+      - uses: moonrepo/setup-rust@v1
         with:
-          toolchain: stable
+          channel: '1.88.0'
 
       - name: Install runner from git
         run: cargo install --git https://github.com/CodSpeedHQ/runner.git --branch cod-992-perf-works-in-github-action-but-not-locally
