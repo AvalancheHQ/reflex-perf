@@ -50,7 +50,7 @@ jobs:
           python3 -c "import sysconfig; print('/'.join(sysconfig.get_config_vars('LIBDIR', 'INSTSONAME')))"
 
           ls -alh .venv/bin/
-          ls -alh .venv/lib/
+          ls -alh .venv/lib/python3.13/
           cat .venv/bin/pytest
 
       - uses: moonrepo/setup-rust@v1
@@ -60,6 +60,9 @@ jobs:
       - name: Install runner from git
         run: cargo install --git https://github.com/CodSpeedHQ/runner.git --branch cod-1315-statically-linked-libpythonso-adds-extra-frames-to-valgrind
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        
       - name: Run benchmarks
         run: codspeed run --api-url https://gql.staging.preview.codspeed.io/ --upload-url https://api.staging.preview.codspeed.io/upload -- uv run pytest tests/benchmarks --codspeed
         env:
