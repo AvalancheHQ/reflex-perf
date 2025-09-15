@@ -25,10 +25,13 @@ jobs:
     runs-on: codspeed-macro-staging
     env:
       CODSPEED_LOG: debug
-      # CODSPEED_USE_PERF: 1
-      CODSPEED_RUNNER_MODE: "walltime"
     steps:
       - uses: actions/checkout@v4
+
+      # Using this action is still necessary for CodSpeed to work
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
 
       - name: Install uv
         uses: astral-sh/setup-uv@v6
