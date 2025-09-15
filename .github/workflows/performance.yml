@@ -49,6 +49,10 @@ jobs:
           uv run python -c "import sysconfig; print('/'.join(sysconfig.get_config_vars('LIBDIR', 'INSTSONAME')))"
           python3 -c "import sysconfig; print('/'.join(sysconfig.get_config_vars('LIBDIR', 'INSTSONAME')))"
 
+          ls -alh .venv/bin/
+          ls -alh .venv/lib/
+          cat .venv/bin/pytest
+
       - uses: moonrepo/setup-rust@v1
         with:
           channel: '1.88.0'
