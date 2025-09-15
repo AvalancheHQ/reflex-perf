@@ -52,7 +52,7 @@ jobs:
           channel: '1.88.0'
 
       - name: Install runner from git
-        run: cargo install --git https://github.com/CodSpeedHQ/runner.git --branch cod-992-perf-works-in-github-action-but-not-locally
+        run: cargo install --git https://github.com/CodSpeedHQ/runner.git --branch cod-1315-statically-linked-libpythonso-adds-extra-frames-to-valgrind
 
       - name: Run benchmarks
         run: codspeed run --api-url https://gql.staging.preview.codspeed.io/ --upload-url https://api.staging.preview.codspeed.io/upload -- uv run pytest tests/benchmarks --codspeed
