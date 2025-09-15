@@ -21,34 +21,24 @@ env:
 jobs:
   benchmarks:
     name: Run benchmarks
-    # runs-on: ubuntu-latest
-    runs-on: codspeed-macro-staging
+    runs-on: ubuntu-latest
+    # runs-on: codspeed-macro-staging
     env:
       CODSPEED_LOG: debug
+   
     steps:
       - uses: actions/checkout@v4
 
-      # Using this action is still necessary for CodSpeed to work
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-
       - name: Install uv
         uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: uv sync -v --all-extras --dev
-
-      - name: Install ubuntu deps
-        run: |
-          sudo apt-get update
-          sudo apt-get install libsass-dev
-
-      # - name: Check fp support
-      #   run: |
-      #     uv run python -m sysconfig | grep 'no-omit-frame-pointer' || true
+        run: uv sync --all-extras --dev
 
       - uses: moonrepo/setup-rust@v1
         with:
